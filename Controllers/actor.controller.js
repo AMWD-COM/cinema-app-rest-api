@@ -1,28 +1,35 @@
 const Actor = require("../Models/acteur.model");
 const actorsController = {};
 actorsController.createActor = (req, res) => {
-  const { nom, prenom } = req.body;
-  const actor = new Actor({
-    nom,
-    prenom,
-  });
-  actor.save();
-  res.status(201).send(actor);
-  console.log(actor);
+  try {
+    const newActor = new Actor(req.body);
+    newActor.save();
+    res.send(newActor);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 };
 
-actorsController.getAllActors = function (req, res) {
+actorsController.getAllActors = async function (req, res) {
   console.log("GET /actors");
+  let actors;
+  try {
+    actors = await Actor.find();
+    res.send(actors);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 
-  Actor.find(function (err, actors) {
-    if (err) {
-      response.status(500).send(error);
-      return;
-    }
-
-    console.log(actors);
-    res.json(actors);
-  });
+actorsController.getSingleActor = async function (req, res) {
+  console.log("GET /actors/:id");
+  let actor;
+  try {
+    actor = await Actor.findById(req.params.id);
+    res.send(actor);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 };
 
 module.exports = actorsController;
