@@ -1,11 +1,11 @@
 const Actor = require("../Models/acteur.model");
 const actorsController = {};
 
-
 actorsController.createActor = async function (req, res) {
   const actor = new Actor({
+    guid: req.body.guid,
     nom: req.body.nom,
-    prenom: req.body.prenom, 
+    prenom: req.body.prenom,
   });
   try {
     await actor.save();
@@ -21,9 +21,7 @@ actorsController.createActor = async function (req, res) {
   }
 };
 
-
 actorsController.getAllActors = async function (req, res) {
-  console.log("GET /actors");
   let actors;
   try {
     actors = await Actor.find();
@@ -34,14 +32,58 @@ actorsController.getAllActors = async function (req, res) {
 };
 
 actorsController.getSingleActor = async function (req, res) {
-  console.log("GET /actors/:id");
+  console.log("GET /actors/:guid");
   let actor;
   try {
-    actor = await Actor.findById(req.params.id);
-    res.send(actor);
+    actor = await Actor.findOne({ guid: req.params.guid});
+    if (actor) {
+      res.send(actor);
+    } else {
+      res.status(404).send("Actor not found");
+    }
   } catch (error) {
     res.status(500).send(error);
   }
 };
+
+
+actorsController.updateActor = async function (req, res) {
+  console.log("PUT /actors/:guid");
+  let actor;
+  try {
+    actor = await Actor.findByIdAndUpdate(
+      { id: req.params.id },
+      { $set: req.body },
+      { new: true }
+    );
+    if (actor) { 
+      res.send(actor);
+    } else {
+      res.status(404).send("Actor not found");
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+}
+
+actorsController.deleteActor = async function (req, res) {
+  console.log("DELETE /actors/:guid");
+  let actor;
+  try {
+    actor = await Actor.findOneAndDelete({ guid: req.params.guid });
+    if (actor) {
+      res.status(200).send("Actor deleted successfully");
+    } else {
+      res.status(404).send("Actor not found");
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+}
+
+
+
+
+
 
 module.exports = actorsController;
