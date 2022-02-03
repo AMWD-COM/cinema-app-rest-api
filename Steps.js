@@ -26,7 +26,50 @@
 // const app = express();
 // app.listen(process.env.PORT , () => console.log("Server connected on port 4000"));
 
+// app.use(express.json());
 
 // .env file :
-// PORT : 4000
-// URL : mongodb://localhost:27017/test
+// PORT = 4000
+// URL = mongodb://localhost:27017/exercices
+
+// Modeles :
+// 1. Student.model.js : Schema for student (id,firstname,lastName,group) + create the collection 
+//  const mongoose = require("mongoose");
+//  const Schema = mongoose.Schema;
+//  const studentSchema = new Schema({
+//     firstName: String,
+//     lastName: String,
+//     group: String
+//  });
+// create the collection :
+//  const Student = mongoose.model("Student", studentSchema);
+// module.exports = Student;
+
+// 2.Exo.model.js : Schema for exo (id,title,description,date,duration,level) + collection 
+//  const mongoose = require("mongoose");
+//  const Schema = mongoose.Schema;
+//  const exoSchema = new Schema({
+    // guid:Number,
+//     title: {
+//         type: String,
+//         required: true,
+// },
+//     description: String, 
+//     date: Date,
+//     duration: Number,
+//     level: String,
+//     students: [{type: Schema.Types.ObjectId, ref: "Student"}]
+//  });
+
+
+// Controllers :
+// 1. StudentsController.js : CRUD for students
+// const StudentController={}
+// module.exports = StudentController;
+
+
+// routers
+// 1. StudentsRouter.js : routes for students
+
+
+// Front :
