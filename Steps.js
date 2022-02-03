@@ -24,7 +24,7 @@
 // Start the server : 
 // const express = require("express");
 // const app = express();
-// app.listen(precess.env.PORT , () => console.log("Server connected on port 4000"));
+// app.listen(process.env.PORT , () => console.log("Server connected on port 4000"));
 
 
 // .env file :
